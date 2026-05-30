@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/alex/projects/engine/build/cmake_install.cmake",
-		"/home/alex/projects/engine/build/lib/SDL/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

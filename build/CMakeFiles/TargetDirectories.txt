@@ -1,8 +1,0 @@
-/home/alex/projects/engine/build/CMakeFiles/prog.dir
-/home/alex/projects/engine/build/CMakeFiles/edit_cache.dir
-/home/alex/projects/engine/build/CMakeFiles/rebuild_cache.dir
-/home/alex/projects/engine/build/lib/SDL/CMakeFiles/SDL3-shared.dir
-/home/alex/projects/engine/build/lib/SDL/CMakeFiles/SDL3_test.dir
-/home/alex/projects/engine/build/lib/SDL/CMakeFiles/SDL_uclibc.dir
-/home/alex/projects/engine/build/lib/SDL/CMakeFiles/edit_cache.dir
-/home/alex/projects/engine/build/lib/SDL/CMakeFiles/rebuild_cache.dir
