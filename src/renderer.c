@@ -14,6 +14,7 @@
 static Batch_Renderer* c_r;
 
 float WHITE[4] = {1,1,1,1};
+float BLACK[4] = {0,0,0,1};
 
 void init_renderer(Batch_Renderer *r, int w, int h, int max) {
     //initilize some variables
@@ -52,7 +53,7 @@ void init_renderer(Batch_Renderer *r, int w, int h, int max) {
     create_shader(&r->FBOshader,"shaders/basic.vert", "shaders/framebuffer.frag");
 
     //set indicies
-    int indicies[6 * r->batch_limit];
+    int *indicies = malloc(sizeof(int) * 6 * r->batch_limit);
     for (int i = 0; i < r->batch_limit; i++) {
 	indicies[0+(i*6)] = 0 + 4*i;
 	indicies[1+(i*6)] = 1 + 4*i;
@@ -61,6 +62,7 @@ void init_renderer(Batch_Renderer *r, int w, int h, int max) {
 	indicies[4+(i*6)] = 2 + 4*i;
 	indicies[5+(i*6)] = 3 + 4*i;
     }
+
 
     //create quad texture
     unsigned int texture;
@@ -89,10 +91,10 @@ void init_renderer(Batch_Renderer *r, int w, int h, int max) {
     glBindVertexArray(r->VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER,r->VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * r->batch_limit, NULL, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * r->batch_limit * 4, NULL, GL_DYNAMIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,r->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * 6 * r->batch_limit, indicies, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, pos));
     glEnableVertexAttribArray(0);
@@ -103,6 +105,7 @@ void init_renderer(Batch_Renderer *r, int w, int h, int max) {
     glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, sample));
     glEnableVertexAttribArray(3);
 
+    free(indicies);
     //set samples
     int samples[16];
     for (int i = 0; i < 16; i++) {
@@ -145,6 +148,11 @@ void init_renderer(Batch_Renderer *r, int w, int h, int max) {
 
     //set the global renderer to the current renderer
     c_r = r;
+
+    GLenum err = glGetError();
+    err = glGetError();
+    printf("OpenGL Error: 0x%04x\n", err);
+
 }
 
 Sprite create_sprite(const char *path) {
@@ -247,7 +255,6 @@ void render_batch() {
 }
 
 
-#define LENGTH 100
 void renderer_update(Batch_Renderer *r, int w, int h, int off, float delta) {
     glViewport(0,0, r->window_width,r->window_height);
 
@@ -257,7 +264,6 @@ void renderer_update(Batch_Renderer *r, int w, int h, int off, float delta) {
     glClearColor(0.2, 0.2, 0.2, 1);
     glClear(GL_COLOR_BUFFER_BIT);
     
-
     glUseProgram(r->shader.id);
     mat4 view, proj, u_transform;
     glm_mat4_identity(view);

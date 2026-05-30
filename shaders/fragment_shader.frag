@@ -1,9 +1,9 @@
-#version 460 core
+#version 410 core
 
 out vec4 FragColor;
 in vec4 vCol;
 in vec2 TexCoord;
-in flat int SampleID;
+flat in int SampleID;
 uniform sampler2D uTextures[16];
 
 void main()

@@ -23,8 +23,8 @@ void drawState(StateManager sm) {
 	case MENU:
 	    break;
     };
+    quad_draw(0,0,10,10,0,1,1,0,0,WHITE);
 
-    quad_draw(0,0,100,100,0,1,1,0,0,WHITE);
 }
 
 void cleanUpState(StateManager *sm) {
