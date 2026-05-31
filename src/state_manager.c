@@ -1,5 +1,4 @@
 #include <state_manager.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <renderer.h>
 
@@ -17,13 +16,13 @@ void updateState(StateManager *sm, float delta) {
 }
 
 void drawState(StateManager sm) {
+
     switch (sm.state) {
 	case GAME:
 	    break;
 	case MENU:
 	    break;
     };
-    quad_draw(0,0,10,10,0,1,1,0,0,WHITE);
 
 }
 
